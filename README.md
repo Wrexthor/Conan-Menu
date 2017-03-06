@@ -30,3 +30,4 @@ Instructions
 5 profit!
 
 
+I don't know SQL, Credit for sql queries: https://github.com/A15Bog/conanexilessql   
