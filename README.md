@@ -13,8 +13,20 @@ Write login logs to separate file
 Not sure, what do you want?
 
 Instructions
+
+
 1 Download Zip from github
+
+
 2 Extract somewhere (does not matter where)
+
+
 3 Right click conan-menu.ps1, run with powershell.
+
+
 4 ??
+
+
 5 profit!
+
+
