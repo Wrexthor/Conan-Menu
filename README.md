@@ -4,7 +4,7 @@ Powershell script to manage Conan Exiles Database.
 
 Features
 
-Remove buildings from characters that has not logged in in x days (based on conan log files)
+Remove buildings from characters that has not logged in in x days (based on conan log files) below y level
 
 Remove all(!) bedrolls and campfires
 
