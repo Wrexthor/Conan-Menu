@@ -10,6 +10,10 @@ Remove all(!) bedrolls and campfires
 
 Optimize database (remove unsed space, reindex, set cache to higher size, analyze, check integrity)
 
+All interactions using a simple script menu, prompting before each action
+
+Automatically backs up database before each change
+
 
 Planned features
 
