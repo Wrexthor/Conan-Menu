@@ -105,19 +105,12 @@ if (!(test-path $database))
 # queries
 $getCharsQuery = 'SELECT playerID,id,char_Name,level,guild, lastTimeOnline FROM characters;'
 $optimizeQuery = "PRAGMA default_cache_size=700000;PRAGMA cache_size=700000;PRAGMA PAGE_SIZE = 4096;VACUUM;REINDEX;ANALYZE;pragma integrity_check"
-$deleteMiscQuery = "delete from actor_position where id in (select distinct object_id from properties where name in 
-    ('BP_PL_Bedroll_Fiber_C.HasHitGround','BP_PL_Bedroll_Fiber_C.SourceItemTemplateID','
-    BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround','BP_PL_Crafting_CampFire_C.SourceItemTemplateID')) 
-    and class in ('/Game/Systems/Building/Placeables/BP_PL_Bedroll_Fiber.BP_PL_Bedroll_Fiber_C',
-    '/Game/Systems/Building/Placeables/BP_PL_Crafting_CampFire.BP_PL_Crafting_CampFire_C');delete from buildable_health 
-    where object_id in (select distinct object_id from properties where name in ('BP_PL_Bedroll_Fiber_C.HasHitGround',
-    'BP_PL_Bedroll_Fiber_C.SourceItemTemplateID','BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround',
-    'BP_PL_Crafting_CampFire_C.SourceItemTemplateID'));delete from buildings where object_id in 
-    (select distinct object_id from properties where name in ('BP_PL_Bedroll_Fiber_C.HasHitGround',
-    'BP_PL_Bedroll_Fiber_C.SourceItemTemplateID','BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround',
-    'BP_PL_Crafting_CampFire_C.SourceItemTemplateID'));delete from item_inventory where template_id in ('12001','10001');
-    delete from properties where name in ('BP_PL_Bedroll_Fiber_C.HasHitGround','BP_PL_Bedroll_Fiber_C.SourceItemTemplateID',
-    'BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround','BP_PL_Crafting_CampFire_C.SourceItemTemplateID');"
+$deleteMiscQuery = "delete from buildable_health where object_id in (select distinct object_id from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%'));
+delete from building_instances where object_id in (select distinct object_id from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%'));
+delete from actor_position where id in (select distinct object_id from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%'));
+delete from item_inventory where template_id in ('12001','10001');
+delete from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%');
+delete from properties where name like '%Bedroll%' or name like '%CampFire%';"
 
 
 $ascii = @'
@@ -301,19 +294,12 @@ while ($true) {
             {
                 Copy-Item "$conanPath\ConanSandbox\Saved\game.db" "$conanPath\ConanSandbox\Saved\backup_bedrolls_$($now)_game.db"
                 write-host "Making backup of database; $conanPath\ConanSandbox\Saved\backup_bedrolls_$($now)_game.db" -ForegroundColor Yellow
-                $deleteMiscQuery = "delete from actor_position where id in (select distinct object_id from properties where name in 
-                ('BP_PL_Bedroll_Fiber_C.HasHitGround','BP_PL_Bedroll_Fiber_C.SourceItemTemplateID','
-                BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround','BP_PL_Crafting_CampFire_C.SourceItemTemplateID')) 
-                and class in ('/Game/Systems/Building/Placeables/BP_PL_Bedroll_Fiber.BP_PL_Bedroll_Fiber_C',
-                '/Game/Systems/Building/Placeables/BP_PL_Crafting_CampFire.BP_PL_Crafting_CampFire_C');delete from buildable_health 
-                where object_id in (select distinct object_id from properties where name in ('BP_PL_Bedroll_Fiber_C.HasHitGround',
-                'BP_PL_Bedroll_Fiber_C.SourceItemTemplateID','BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround',
-                'BP_PL_Crafting_CampFire_C.SourceItemTemplateID'));delete from buildings where object_id in 
-                (select distinct object_id from properties where name in ('BP_PL_Bedroll_Fiber_C.HasHitGround',
-                'BP_PL_Bedroll_Fiber_C.SourceItemTemplateID','BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround',
-                'BP_PL_Crafting_CampFire_C.SourceItemTemplateID'));delete from item_inventory where template_id in ('12001','10001');
-                delete from properties where name in ('BP_PL_Bedroll_Fiber_C.HasHitGround','BP_PL_Bedroll_Fiber_C.SourceItemTemplateID',
-                'BasePlayerChar_C.BedRollID','BP_PL_Crafting_CampFire_C.HasHitGround','BP_PL_Crafting_CampFire_C.SourceItemTemplateID');"
+                $deleteMiscQuery = "delete from buildable_health where object_id in (select distinct object_id from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%'));
+		delete from building_instances where object_id in (select distinct object_id from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%'));
+		delete from actor_position where id in (select distinct object_id from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%'));
+		delete from item_inventory where template_id in ('12001','10001');
+		delete from buildings where object_id in (select distinct object_id from properties where name like '%Bedroll%' or name like '%CampFire%');
+		delete from properties where name like '%Bedroll%' or name like '%CampFire%';"
                 Invoke-SqliteQuery -DataSource $database -Query $deleteMiscQuery
             }
             else {write-host 'No action taken.' -ForegroundColor Yellow}          
