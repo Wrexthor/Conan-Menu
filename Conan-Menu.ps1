@@ -279,6 +279,8 @@ while ($true) {
           }
           2 # remove old chars
 	      {
+	      write-host "Temporarily removed, might be issues with level filter" -for red
+	      <#
             Write-host 'Please note that this script is only as good as the logs it reads. 
 If there are only logs for today, it will think everyone who has not logged in today should be cleaned.
 Make sure to save log files for as long back as possible for optimal results.' -ForegroundColor Yellow
@@ -361,7 +363,7 @@ Make sure to save log files for as long back as possible for optimal results.' -
 
             }
             else {write-host 'No action taken.' -ForegroundColor Yellow}
-          
+          #>
 	      }
 	      3 # remove campfire
 	      {
