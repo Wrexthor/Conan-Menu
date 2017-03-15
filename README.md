@@ -6,19 +6,22 @@ How it looks:
 
 Features
 * Automatically detects conan folder
-* Remove buildings from characters that has not logged in in x days (based on conan log files) below y level
-* Remove all(!) bedrolls and campfires
+* Server report, bunch of info regarding server
+* Write chat logs to separate file
+* Write login logs to separate file
+* List all characters and guilds on server
+* Update character name
+* Fix characters stuck in nowhere/unable to login
+* Deprecated! - Remove buildings from characters that has not logged in in x days (based on conan log files) below y level
+* Delete assets without owner or empty guild assets
+* Remove all bedrolls and campfires
 * Optimize database (remove unsed space, reindex, set cache to higher size, analyze, check integrity)
 * All interactions using a simple script menu, prompting before each action
 * Automatically backs up database before each change
-* Write chat logs to separate file
-* Write login logs to separate file
-* Update character name
 
 Planned features
 * Remove ALL single foundations
 * Delete specified Guild and characters including all their assets
-* Delete assets without owner or empty guild assets
 
 Instructions
  1. Download Zip from github
